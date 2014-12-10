@@ -19,23 +19,42 @@ var doc = document.addEventListener('DOMContentLoaded', function() {
             var loadBox = setTimeout(function() { 
                 var container = document.createElement('div');
                 container.style.backgroundColor = 'white';
-                container.style.borderWidth     = '1px';
-                container.style.borderStyle     = 'solid';
-                container.style.borderColor     = 'black';
+                container.style.border          = '1px solid #C8C8C8';
+                container.style.borderRadius    = '5px';
+                container.style.boxShadow       = '0px 0px 10px rgba(0, 0, 0, 0.4)';
+                container.style.padding         = '8px 8px 0px 0px';
                 container.style.position        = 'absolute';
-                container.style.top             =   '0px';
+                container.style.top             = '0px';
                 container.style.left            = '570px';
+
+                var quote = document.createElement('blockquote');
+                quote.style.borderWidth = '0px';
+                quote.style.margin      = '0px 5px 0px 0px';
+                quote.style.padding     = '4px 8px 8px 4px';
+                quote.style.overflow    = 'hidden';
+                quote.style.wordWrap    = 'break-word';
+                quote.style.whiteSpace  = 'pre-wrap';
+
+                var statusAction       = msgBox.querySelector('#status-actions');
+                var submitButton       = msgBox.querySelector('button');
+                var charsLeftContainer = document.createElement('span');
+                var charsLeft          = document.createElement('span');
+                charsLeftContainer.appendChild(charsLeft);
+                charsLeftContainer.appendChild(document.createTextNode(' Zeichen übrig'));
+                statusAction.appendChild(charsLeftContainer);
 
                 var textInput = msgBox.querySelector('#network-update');
                 textInput.addEventListener('keyup', function() {
-                    container.textContent = this.value;
+                    quote.textContent = this.value;
+                    charsLeft.textContent = 140 - parseInt(quote.textContent.length);
 
-                    if (container.textContent.length > 140) {
+                    if (quote.textContent.length > 140) {
                         container.style.borderColor = 'red';
                     } else {
                         container.style.borderColor = 'black';
                     }
                 }, false);
+                container.appendChild(quote);
                 msgBox.appendChild(container);
 
                 clearTimeout(loadBox);
